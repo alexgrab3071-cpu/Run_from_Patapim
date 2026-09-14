@@ -12,16 +12,13 @@ def print_menu(options):
         print(f"  {option}")
     print("-" * 30)
 
-def safe_input(prompt, valid_range=None):
+def safe_input(prompt, valid_range):
     while True:
         try:
-            user_input = input(prompt)
-            if valid_range is not None:
-                num = int(user_input)
-                if num in valid_range:
-                    return num
-                print(f"Введи число от {min(valid_range)} до {max(valid_range)}!")
+            value = int(input(prompt))
+            if value in valid_range:
+                return value
             else:
-                return user_input
+                print(f"Неверный ввод. Введите число от {min(valid_range)} до {max(valid_range)}.")
         except ValueError:
-            print("Введи число, братан!")
+            print("Это не число. Попробуйте снова.")
