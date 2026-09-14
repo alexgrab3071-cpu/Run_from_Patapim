@@ -7,7 +7,7 @@ from general_defs import *
 print("Ссылка на GitHub: https://github.com/alexgrab3071-cpu/Run_from_Patapim.git")
 print()
 print("=" * 60)
-print("ПОБЕГ ИЗ ПАТАПИМА")
+print("ПОБЕГ ИЗ БР БР ПАТАПИМА")
 print("=" * 60)
 print(
     "После тусы вы с вашими друзьями ехали на такси в сторону дома. Из-за пьянки\n"
@@ -38,9 +38,13 @@ def line():
     print("-" * 60)
 
 
-# ============================================================
-# ПОДВАЛ И ДОМ
-# ============================================================
+def menu(options):
+    line()
+    for i, opt in enumerate(options, start=1):
+        print(f"{i}. {opt}")
+    line()
+    return safe_input(f"Введите число от 1 до {len(options)}: ", range(1, len(options) + 1))
+
 
 def location_basement():
     global life, find_key, escaped_basement, inventory
@@ -49,14 +53,13 @@ def location_basement():
         print("=" * 60)
         print("ТЁМНЫЙ ПОДВАЛ")
         print("=" * 60)
-        line()
-        print("1. Еще поспать, мало-ли это кошмар?")
-        print("2. Осмотреться, может, что-то будет видно?" if not find_key else "2. (уже осмотрено)")
-        print("3. Позвать на помощь, а то подвал закрыт")
-        print("4. Постараться выбраться")
-        line()
-
-        thirst_choose = safe_input("Ваш выбор (1-4): ", range(1, 5))
+        options = [
+            "Еще поспать, мало-ли это кошмар?",
+            "(уже осмотрено)" if find_key else "Осмотреться, может, что-то будет видно?",
+            "Позвать на помощь, а то подвал закрыт",
+            "Постараться выбраться"
+        ]
+        thirst_choose = menu(options)
 
         if thirst_choose == 1:
             print()
@@ -236,12 +239,11 @@ def location_house_hall():
         time.sleep(1)
         print("Ориентироваться можно только на ощупь...")
         time.sleep(1)
-        line()
-        print("1. Пойти вперед, постараться найти что-то на ощупь...")
-        print("2. Искать предметы на ощупь...")
-        print("3. Посмотреть инвентарь...")
-        line()
-        choose = safe_input("Ваш выбор: ", range(1, 4))
+        choose = menu([
+            "Пойти вперед, постараться найти что-то на ощупь...",
+            "Искать предметы на ощупь...",
+            "Посмотреть инвентарь..."
+        ])
 
         if choose == 1:
             time.sleep(1)
@@ -254,11 +256,10 @@ def location_house_hall():
             if r == 1:
                 print("Вы смогли найти фонарик, который мог бы помочь, и рубильник.")
                 time.sleep(1)
-                line()
-                print("1. Взять фонарик, забыв про рубильник")
-                print("2. Дернуть рычаг рубильника, проверить, что случится")
-                line()
-                choose_1 = safe_input("Ваш выбор: ", range(1, 3))
+                choose_1 = menu([
+                    "Взять фонарик, забыв про рубильник",
+                    "Дернуть рычаг рубильника, проверить, что случится"
+                ])
                 if choose_1 == 1:
                     print("Отлично, теперь хоть что-то видно!")
                     inventory.append(["Рабочий фонарик", 1])
@@ -284,13 +285,12 @@ def location_house_hall():
         print("=" * 60)
         print("Вы находитесь в холле, с фонариком. Теперь все пути видно, куда пойдете?")
         time.sleep(1)
-        line()
-        print("1. Направо, к лестнице")
-        print("2. Налево, на кухню")
-        print("3. Вперед, к прихожей")
-        print("4. Посмотреть инвентарь...")
-        line()
-        choose = safe_input("Ваш выбор: ", range(1, 5))
+        choose = menu([
+            "Направо, к лестнице",
+            "Налево, на кухню",
+            "Вперед, к прихожей",
+            "Посмотреть инвентарь..."
+        ])
         if choose == 1:
             time.sleep(1)
             print("Вы идете направо к лестнице...")
@@ -329,11 +329,10 @@ def location_stairs_1_floor():
     time.sleep(1)
     print("Вы слышите, как кто-то храпит на втором этаже...")
     time.sleep(1)
-    line()
-    print("1. Остаться на первом этаже, пойти в холл...")
-    print("2. Пойти по лестнице на второй этаж...")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 3))
+    choose = menu([
+        "Остаться на первом этаже, пойти в холл...",
+        "Пойти по лестнице на второй этаж..."
+    ])
     if choose == 1:
         time.sleep(1)
         print("Вы отходите от лестницы и приходите в холл...")
@@ -353,13 +352,12 @@ def location_stairs_2_floor():
     time.sleep(1)
     print("Вы находитесь на втором этаже, перед вами 2 двери, из левой слышен храп а правая закрыта на замок")
     time.sleep(2)
-    line()
-    print("1. Открыть правую дверь...")
-    print("2. Пойти в левую дверь, на храп...")
-    print("3. Пойти назад, на первый этаж...")
-    print("4. Посмотреть инвентарь...")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+    choose = menu([
+        "Открыть правую дверь...",
+        "Пойти в левую дверь, на храп...",
+        "Пойти назад, на первый этаж...",
+        "Посмотреть инвентарь..."
+    ])
     if choose == 1:
         if cherdak_key:
             time.sleep(1)
@@ -393,16 +391,15 @@ def location_Patapim_room():
     time.sleep(1)
     print("Перед вами лежит огромное существо из знаменитой группы ИИподобной mozgognil...")
     time.sleep(1)
-    line()
-    print("1. Выйти обратно в холл этажа 2...")
+    options = ["Выйти обратно в холл этажа 2..."]
     if not found_patapim_key:
-        print("2. Постараться забрать странные ключи на тумбочке Бр-бр Патапима (вы их увидели)...")
+        options.append("Постараться забрать странные ключи на тумбочке Бр-бр Патапима (вы их увидели)...")
     else:
-        print("2. (Уже забрано)")
-    print("3. Напасть на Бр-бр Патапима...")
-    print("4. Посмотреть инвентарь...")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+        options.append("(Уже забрано)")
+    options.append("Напасть на Бр-бр Патапима...")
+    options.append("Посмотреть инвентарь...")
+    choose = menu(options)
+
     if choose == 1:
         print("Вы вышли...")
         time.sleep(1)
@@ -435,17 +432,17 @@ def location_kitchen():
     time.sleep(1)
     print("Вы проходите по корридору в сторону кухни.")
     time.sleep(1)
-    line()
-    print("1. Проверить ящики с едой")
+    options = ["Проверить ящики с едой"]
     if not found_car_key:
-        print("2. Проверить ящики с не едой")
+        options.append("Проверить ящики с не едой")
     else:
-        print("2. (Уже изрыто)")
-    print("3. Подойти к столу")
-    print("4. Уйти обратно в холл этажа 1")
-    print("5. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 6))
+        options.append("(Уже изрыто)")
+    options += [
+        "Подойти к столу",
+        "Уйти обратно в холл этажа 1",
+        "Посмотреть инвентарь"
+    ]
+    choose = menu(options)
     if choose == 1:
         r = random.randint(1, 2)
         if r == 1:
@@ -495,16 +492,17 @@ def location_prihozhaya():
     time.sleep(1)
     print("Вы замечаете маленькую вентиляцию около двери...")
     time.sleep(1)
-    line()
+    options = []
     if not vent:
-        print("1. Полезть в вентиляцию")
+        options.append("Полезть в вентиляцию")
     else:
-        print("1. Вы уже лазали в вентиляцию.")
-    print("2. Открыть выходную дверь")
-    print("3. Вернуться обратно в холл")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+        options.append("Вы уже лазали в вентиляцию.")
+    options += [
+        "Открыть выходную дверь",
+        "Вернуться обратно в холл",
+        "Посмотреть инвентарь"
+    ]
+    choose = menu(options)
     if choose == 1 and not vent:
         time.sleep(1)
         print("Вы пролезаете в вентиляцию, там вы находите две вещи: Мягкие тапочки и ключи от какой-то двери...")
@@ -568,16 +566,16 @@ def location_street_next_to_house():
     print("=" * 60)
     print("Вы выбираетесь на улицу, вместо привычной деревни/города вы видите темный лес и только лишь дорога выделяется на фоне мрака.")
     time.sleep(3)
-    line()
-    print("1. Пойти вперед, к дороге")
-    print("2. Уйти обратно в холл")
+    options = [
+        "Пойти вперед, к дороге",
+        "Уйти обратно в холл"
+    ]
     if see_car:
-        print("3. Повернуть налево, к машине")
+        options.append("Повернуть налево, к машине")
     else:
-        print("3. (ЗАКРЫТО, МОЖНО ОТКРЫТЬ НА ЛОКАЦИЯХ)")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор : ", range(1, 5))
+        options.append("(ЗАКРЫТО, МОЖНО ОТКРЫТЬ НА ЛОКАЦИЯХ)")
+    options.append("Посмотреть инвентарь")
+    choose = menu(options)
     if choose == 1:
         print("Перед вами калитка. Вы открываете ее и выходите на дорогу.")
         time.sleep(1)
@@ -587,11 +585,10 @@ def location_street_next_to_house():
         time.sleep(2)
         print("Вам кажется, будто в N-ном месте воздух искажается...")
         time.sleep(2)
-        line()
-        print("1. Уйти обратно, на дорогу")
-        print("2. Зайти в разлом реальности")
-        line()
-        choose = safe_input("Ваш выбор: ", range(1, 3))
+        choose = menu([
+            "Уйти обратно, на дорогу",
+            "Зайти в разлом реальности"
+        ])
         if choose == 1:
             print("Вы пытаетесь найти дорогу назад, но умираете от голода и жажды в вечных поисках")
             return "mogila"
@@ -627,12 +624,11 @@ def location_next_to_car():
     print("=" * 60)
     print("Вы подходите к машине, на машине есть огромный кузов, может, попробовать уехать?")
     time.sleep(2)
-    line()
-    print("1. Попробовать открыть машину...")
-    print("2. Уйти обратно к выходу из дома...")
-    print("3. Посмотреть инвентарь...")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Попробовать открыть машину...",
+        "Уйти обратно к выходу из дома...",
+        "Посмотреть инвентарь..."
+    ])
     if choose == 1 and found_car_key:
         print("С помощью ключа вы открываете дверь машины и садитесь за руль")
         return "car_seat"
@@ -657,16 +653,16 @@ def location_car_seat():
     print("=" * 60)
     print("Вам знакома эта машина, это популярная марка Baobabys, теперь вы в машине")
     time.sleep(2)
-    line()
-    print("1. Уехать по шоссе в город")
+    options = ["Уехать по шоссе в город"]
     if found_caboom and uran_candies:
-        print("2. Исполнить план по изъятию ядерного оружия...")
+        options.append("Исполнить план по изъятию ядерного оружия...")
     else:
-        print("2. |ЗАКРЫТО|")
-    print("3. Выйти обратно во двор")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+        options.append("|ЗАКРЫТО|")
+    options += [
+        "Выйти обратно во двор",
+        "Посмотреть инвентарь"
+    ]
+    choose = menu(options)
     if choose == 1:
         print("Вы уехали в город, начало расцветать, вы узнавали Москву все лучше, часть 1 закончилась...")
         print()
@@ -703,10 +699,6 @@ def location_car_seat():
     return "car_seat"
 
 
-# ============================================================
-# ГОРОД И РАБОТА
-# ============================================================
-
 def location_town():
     global life, have_phone, location, inventory, deth_babke
     print()
@@ -715,26 +707,24 @@ def location_town():
     print("=" * 60)
     time.sleep(1)
     print("Вы приехали в город, доступные выборы:")
-    line()
-    print("1. Искать работу")
-    print("2. Пойти в ТЦ")
-    print("3. Попрошайничать")
-    print("4. Пойти на автобусную остановку")
-    print("5. Пойти в метро")
-    print("6. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 7))
+    choose = menu([
+        "Искать работу",
+        "Пойти в ТЦ",
+        "Попрошайничать",
+        "Пойти на автобусную остановку",
+        "Пойти в метро",
+        "Посмотреть инвентарь"
+    ])
 
     if choose == 1:
         if not have_phone:
             print("У вас не было телефона, чтобы поискать работу, у вас выбор: Идти дворником / Идти продавцом Moggнита.")
             time.sleep(1)
-            line()
-            print("1. Устроиться на работу дворником.")
-            print("2. Устроиться на работу продавцом")
-            print("3. Ничего не делать, вернуться к выбору")
-            line()
-            sub_choose = safe_input("Ваш выбор: ", range(1, 4))
+            sub_choose = menu([
+                "Устроиться на работу дворником.",
+                "Устроиться на работу продавцом",
+                "Ничего не делать, вернуться к выбору"
+            ])
             if sub_choose == 1:
                 print("Вы устроились дворником...")
                 time.sleep(1)
@@ -766,15 +756,16 @@ def location_town():
         time.sleep(1)
         print("На остановке сидела бабушка, автобус будет через минуту.")
         time.sleep(1)
-        line()
+        options = []
         if not deth_babke:
-            print("1. Избить бабку")
+            options.append("Избить бабку")
         else:
-            print("1. Хз, побейте труп...")
-        print("2. Ждать автобус")
-        print("3. Уйти в город")
-        line()
-        sub_choose = safe_input("Ваш выбор: ", range(1, 4))
+            options.append("Хз, побейте труп...")
+        options += [
+            "Ждать автобус",
+            "Уйти в город"
+        ]
+        sub_choose = menu(options)
         if sub_choose == 1 and not deth_babke:
             r = random.randint(10, 50)
             print(f"Вы подошли к бабке, избили ее, с нее вы получили + {r*10} рублей.")
@@ -819,13 +810,12 @@ def location_work_dvornik():
     print("=" * 60)
     print("Вы устроились работать дворником...")
     time.sleep(2)
-    line()
-    print("1. Работать")
-    print("2. Работать")
-    print("3. Бросить работу")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Работать",
+        "Работать",
+        "Бросить работу",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1 or choose == 2:
         for i in range(10):
             print(f"Вы поработали на {i}%")
@@ -851,12 +841,11 @@ def location_work_prodavec():
     print("Вы устроились работать продавцом")
     things = ["Яблоко", "Банан", "Котось", "Бумага А4", "Бумага RGB", "Бумага A67", "Ананас", "RTX6090", "Соль", "Мозгогниль", "Польша"]
     time.sleep(1)
-    line()
-    print("1. Пойти на кассу, принять товары")
-    print("2. Уйти.")
-    print("3. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Пойти на кассу, принять товары",
+        "Уйти.",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         show = []
         for i in range(random.randint(1, 5)):
@@ -867,10 +856,7 @@ def location_work_prodavec():
         for item in show:
             print(item)
         time.sleep(3)
-        line()
-        print("1. Оплатить")
-        line()
-        choose = safe_input("Ваш выбор: ", range(1, 2))
+        choose = menu(["Оплатить"])
         if choose == 1:
             r = random.randint(1, 10)
             print(f"Вы заработали с покупки {r*1000} Рублей")
@@ -895,27 +881,28 @@ def location_selo_molochnoe():
     time.sleep(1)
     print("Вы вышли из автобуса в село молочное...")
     time.sleep(1)
-    line()
-    print("1. Прогуляться по селу")
-    print("2. Пойти в лес")
+    options = [
+        "Прогуляться по селу",
+        "Пойти в лес"
+    ]
     if have_AP_ticket:
-        print("3. Пойти в Алабуга Политех")
-        print("4. Уехать из села в город")
-        print("5. Посмотреть инвентарь")
+        options += [
+            "Пойти в Алабуга Политех",
+            "Уехать из села в город",
+            "Посмотреть инвентарь"
+        ]
     else:
-        print("3. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 6 if have_AP_ticket else 4))
+        options.append("Посмотреть инвентарь")
+    choose = menu(options)
 
     if choose == 1:
         print("Вы решили прогуляться, вы заметили паука вдали, он был примерно 35 метров в высоту")
         time.sleep(1)
-        line()
-        print("1. Напасть на него")
-        print("2. Спросить у него, нет ли ничего прикольного")
-        print("3. Посмотреть инвентарь")
-        line()
-        sub_choose = safe_input("Ваш выбор: ", range(1, 4))
+        sub_choose = menu([
+            "Напасть на него",
+            "Спросить у него, нет ли ничего прикольного",
+            "Посмотреть инвентарь"
+        ])
         if sub_choose == 1:
             print("Он вас убил.")
             return "mogila"
@@ -970,9 +957,6 @@ def location_selo_molochnoe():
 
     return "selo_molochnoe"
 
-# ============================================================
-# НОВЫЕ ЛОКАЦИИ
-# ============================================================
 
 def location_shopping_centre():
     global life, location, inventory
@@ -981,15 +965,14 @@ def location_shopping_centre():
     print("ТОРГОВЫЙ ЦЕНТР")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Уйти в город")
-    print("2. Пойти в Магазин Светофор")
-    print("3. Пойти в Магазин Авиасейлс")
-    print("4. Пойти в Кинотеатр")
-    print("5. Пойти в ПК магазин")
-    print("6. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 7))
+    choose = menu([
+        "Уйти в город",
+        "Пойти в Магазин Светофор",
+        "Пойти в Магазин Авиасейлс",
+        "Пойти в Кинотеатр",
+        "Пойти в ПК магазин",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         print("Вы вышли из ТЦ в город...")
         time.sleep(1)
@@ -1024,12 +1007,11 @@ def location_svetofor():
     print("=" * 60)
     time.sleep(1)
     print("Вы в магазине Светофор. Тут пахнет... странно.")
-    line()
-    print("1. Купить мясо (если денег больше 100)")
-    print("2. (двери закрыты)")
-    print("3. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Купить мясо (если денег больше 100)",
+        "(двери закрыты)",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         if inventory[1][1] > 100:
             inventory[1][1] -= 100
@@ -1064,12 +1046,11 @@ def location_aviasales():
     print("=" * 60)
     time.sleep(1)
     print("Вы в магазине Авиасейлс. Тут продают билеты.")
-    line()
-    print("1. Купить билет (если денег больше 10 000)")
-    print("2. Уйти в ТЦ")
-    print("3. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Купить билет (если денег больше 10 000)",
+        "Уйти в ТЦ",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         if inventory[1][1] > 10000:
             inventory[1][1] -= 10000
@@ -1135,11 +1116,10 @@ def location_pole_chudes():
     print("=" * 60)
     time.sleep(1)
     print("Вы на шоу Поле Чудес! Якубович смотрит на вас.")
-    line()
-    print("1. Угадать слово")
-    print("2. Уйти")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 3))
+    choose = menu([
+        "Угадать слово",
+        "Уйти"
+    ])
     if choose == 1:
         words = ["арбузы", "хаммам", "изоляция"]
         secret = random.choice(words)
@@ -1185,14 +1165,13 @@ def location_cinema():
     print("=" * 60)
     time.sleep(1)
     print("Вы в кинотеатре. Что будете смотреть?")
-    line()
-    print("1. Смешарики сквозь вселенные")
-    print("2. Человек-паук")
-    print("3. Колобок")
-    print("4. Уйти")
-    print("5. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 6))
+    choose = menu([
+        "Смешарики сквозь вселенные",
+        "Человек-паук",
+        "Колобок",
+        "Уйти",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         print("Вы посмотрели Смешарики сквозь вселенные...")
         time.sleep(2)
@@ -1236,13 +1215,12 @@ def location_pk_shop():
     print("=" * 60)
     time.sleep(1)
     print("Вы в ПК магазине. Тут продают компьютеры и арендуют места.")
-    line()
-    print("1. Купить сборку ПК (если денег больше 50 000)")
-    print("2. Арендовать ПК на час (если денег больше 10 000)")
-    print("3. Уйти")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+    choose = menu([
+        "Купить сборку ПК (если денег больше 50 000)",
+        "Арендовать ПК на час (если денег больше 10 000)",
+        "Уйти",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         if inventory[1][1] > 50000:
             inventory[1][1] -= 50000
@@ -1280,13 +1258,12 @@ def location_ecran_pk():
     print("=" * 60)
     time.sleep(1)
     print("Вы за ПК. Что будете делать?")
-    line()
-    print("1. Поиграть в Minecraft")
-    print("2. Поиграть в Сапера")
-    print("3. Поиграть в CS2")
-    print("4. Выйти в город")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+    choose = menu([
+        "Поиграть в Minecraft",
+        "Поиграть в Сапера",
+        "Поиграть в CS2",
+        "Выйти в город"
+    ])
     if choose == 1:
         return "minecraft"
     elif choose == 2:
@@ -1307,11 +1284,10 @@ def location_minecraft():
     print("MINECRAFT")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Новый мир")
-    print("2. Выйти из игры")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 3))
+    choose = menu([
+        "Новый мир",
+        "Выйти из игры"
+    ])
     if choose == 1:
         hours = random.randint(1, 24)
         print(f"Вы играли {hours} часов и прошли Minecraft. Молодцы!")
@@ -1331,11 +1307,10 @@ def location_saper():
     print("САПЁР")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Играть")
-    print("2. Выйти")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 3))
+    choose = menu([
+        "Играть",
+        "Выйти"
+    ])
     if choose == 1:
         print("Вы играли в Сапёра. Молодцы!")
         time.sleep(2)
@@ -1347,6 +1322,294 @@ def location_saper():
     return "saper"
 
 
+cs2_weapons = {
+    "Пистолет": 1,
+    "SMG": 2,
+    "Винтовка": 4,
+    "AWP": 5,
+    "Нож": 1,
+}
+
+
+def cs2_show_hud(map_name, team, hp, money, weapon, armor, kills, pos, total):
+    line()
+    print(f"  Карта: {map_name}  |  Сторона: {team}")
+    print(f"  HP: {hp}  |  Деньги: ${money}  |  Убийств: {kills}")
+    print(f"  Оружие: {weapon}  |  Броня: {'да' if armor else 'нет'}")
+    print(f"  Позиция: {pos}/{total}")
+    line()
+
+
+def cs2_buy_menu(money, weapon, armor):
+    print()
+    print("МАГАЗИН:")
+    choice = menu([
+        "Пистолет      — $0     (сила 1)",
+        "SMG           — $1200  (сила 2)",
+        "Винтовка      — $2700  (сила 4)",
+        "AWP           — $4750  (сила 5)",
+        "Броня         — $650   (+1 защита)",
+        "Пропустить"
+    ])
+    if choice == 1:
+        weapon = "Пистолет"
+        print("Вы взяли пистолет.")
+    elif choice == 2:
+        if money >= 1200:
+            money -= 1200
+            weapon = "SMG"
+            print("Вы купили SMG.")
+        else:
+            print("Не хватает денег.")
+    elif choice == 3:
+        if money >= 2700:
+            money -= 2700
+            weapon = "Винтовка"
+            print("Вы купили винтовку.")
+        else:
+            print("Не хватает денег.")
+    elif choice == 4:
+        if money >= 4750:
+            money -= 4750
+            weapon = "AWP"
+            print("Вы купили AWP.")
+        else:
+            print("Не хватает денег.")
+    elif choice == 5:
+        if money >= 650:
+            money -= 650
+            armor = True
+            print("Вы купили броню.")
+        else:
+            print("Не хватает денег.")
+    else:
+        print("Вы пропустили покупку.")
+    return money, weapon, armor
+
+
+def cs2_end_match(reason):
+    print()
+    print("=" * 60)
+    print("МАТЧ ОКОНЧЕН")
+    print("=" * 60)
+    print(reason)
+    print("Вы возвращаетесь в меню CS2...")
+    time.sleep(2)
+    return "cs2"
+
+
+def cs2_explore_map(map_name, team):
+    positions = [
+        "Спавн",
+        "Центр карты",
+        "Длинный коридор",
+        "Узкий проход",
+        "Плац",
+        "Точка А",
+        "Точка Б",
+        "Крыша",
+        "Подвал",
+        "Выход"
+    ]
+    total = len(positions)
+    pos = 0
+    hp = 100
+    money = 800
+    weapon = "Пистолет"
+    armor = False
+    kills = 0
+
+    smoke = 0
+    flash = 0
+    defuse_kit = False
+
+    has_bomb = (team == "Т")
+    bomb_planted = False
+    bomb_site = None
+    bomb_timer = 0
+    bomb_defused = False
+
+    print()
+    print("=" * 60)
+    print(f"ВЫ НА КАРТЕ {map_name} ЗА {team}")
+    print("=" * 60)
+    if team == "Т":
+        print("У вас есть бомба. Заложите её на точке А или Б.")
+    else:
+        print("Ваша задача — не дать Т заложить бомбу или разминировать её.")
+    time.sleep(2)
+
+    while pos < total and hp > 0:
+        print()
+        print(f"ТОЧКА: {positions[pos]}")
+        cs2_show_hud(map_name, team, hp, money, weapon, armor, kills, pos + 1, total)
+        print(f"  Гранаты: дымовая x{smoke}  |  флешка x{flash}  |  дефуз-кит: {'да' if defuse_kit else 'нет'}")
+
+        if bomb_planted and not bomb_defused:
+            print(f"  !!! БОМБА ЗАЛОЖЕНА НА ТОЧКЕ {bomb_site}. ДО ВЗРЫВА: {bomb_timer} ходов !!!")
+
+        options = [
+            "Идти дальше",
+            "Осмотреться (найти лут)",
+            "Купить оружие",
+            "Перевязаться (+10 HP)"
+        ]
+        if team == "Т" and has_bomb and positions[pos] in ("Точка А", "Точка Б") and not bomb_planted:
+            options.append("Заложить бомбу")
+        if team == "КТ" and bomb_planted and not bomb_defused and positions[pos] == f"Точка {bomb_site}":
+            options.append("Разминировать бомбу")
+        choose = menu(options)
+
+        if choose == 3:
+            money, weapon, armor = cs2_buy_menu(money, weapon, armor)
+            continue
+
+        if choose == 4:
+            hp += 10
+            if hp > 100:
+                hp = 100
+            print("Вы перевязались и восстановили 10 HP.")
+            if bomb_planted and not bomb_defused:
+                bomb_timer -= 1
+                if bomb_timer <= 0:
+                    return cs2_end_match("БОМБА ВЗОРВАЛАСЬ! Т побеждают.")
+            continue
+
+        if choose == 2:
+            r = random.randint(1, 5)
+            if r == 1:
+                print("Вы нашли $300.")
+                money += 300
+            elif r == 2:
+                print("Вы нашли дымовую гранату!")
+                smoke += 1
+            elif r == 3:
+                print("Вы нашли флешку!")
+                flash += 1
+            elif r == 4:
+                print("Вы нашли броню!")
+                armor = True
+            elif r == 5 and team == "КТ":
+                print("Вы нашли дефуз-кит!")
+                defuse_kit = True
+            else:
+                print("Ничего не нашли.")
+            if bomb_planted and not bomb_defused:
+                bomb_timer -= 1
+                if bomb_timer <= 0:
+                    return cs2_end_match("БОМБА ВЗОРВАЛАСЬ! Т побеждают.")
+            continue
+
+        if choose == 5 and team == "Т" and has_bomb and positions[pos] in ("Точка А", "Точка Б") and not bomb_planted:
+            bomb_planted = True
+            bomb_site = "А" if positions[pos] == "Точка А" else "Б"
+            bomb_timer = 5
+            print(f"Вы заложили бомбу на точке {bomb_site}! У КТ есть 5 ходов, чтобы её разминировать.")
+            continue
+
+        if choose == 5 and team == "КТ" and bomb_planted and not bomb_defused and positions[pos] == f"Точка {bomb_site}":
+            chance = 75 if defuse_kit else 50
+            if random.randint(1, 100) <= chance:
+                bomb_defused = True
+                return cs2_end_match("Вы успешно разминировали бомбу! КТ побеждают.")
+            else:
+                print("Вы пытались разминировать, но не успели. Попробуйте ещё раз.")
+                bomb_timer -= 1
+                if bomb_timer <= 0:
+                    return cs2_end_match("БОМБА ВЗОРВАЛАСЬ! Т побеждают.")
+                continue
+
+        event = random.randint(1, 6)
+        if event == 1:
+            print("Вы встретили врага!")
+            enemy_hp = random.randint(30, 80)
+            enemy_power = random.randint(1, 5)
+            your_power = cs2_weapons[weapon] + (1 if armor else 0)
+            print(f"Враг: HP {enemy_hp}, сила {enemy_power}  |  Ваша сила: {your_power}")
+            if flash > 0:
+                use_flash = menu([
+                    "Использовать флешку",
+                    "Не использовать"
+                ])
+                if use_flash == 1:
+                    flash -= 1
+                    enemy_power = max(1, enemy_power - 2)
+                    print("Вы кинули флешку! Враг оглушён, его сила снижена.")
+            if smoke > 0:
+                use_smoke = menu([
+                    "Кинуть дым и уйти от боя",
+                    "Остаться в бою"
+                ])
+                if use_smoke == 1:
+                    smoke -= 1
+                    print("Вы кинули дым и ушли от боя.")
+                    pos += 1
+                    continue
+            while enemy_hp > 0 and hp > 0:
+                time.sleep(1)
+                if random.randint(1, 10) <= your_power * 2:
+                    dmg = random.randint(15, 35)
+                    enemy_hp -= dmg
+                    print(f"Вы попали во врага на {dmg}. HP врага: {max(enemy_hp, 0)}")
+                else:
+                    print("Вы промахнулись.")
+                if enemy_hp <= 0:
+                    break
+                if random.randint(1, 10) <= enemy_power * 2:
+                    dmg = random.randint(10, 30)
+                    if armor and random.randint(1, 2) == 1:
+                        print("Броня поглотила часть урона.")
+                        dmg //= 2
+                    hp -= dmg
+                    print(f"Враг попал в вас на {dmg}. Ваше HP: {max(hp, 0)}")
+                else:
+                    print("Враг промахнулся.")
+            if hp <= 0:
+                return cs2_end_match("Вы погибли в бою.")
+            else:
+                kills += 1
+                money += 300
+                print(f"Вы убили врага! Всего убийств: {kills}")
+        elif event == 2:
+            print("Вы встретили союзника. Он дал вам $200.")
+            money += 200
+        elif event == 3:
+            print("Вы нашли лут: дымовую гранату.")
+            smoke += 1
+        elif event == 4:
+            print("Вы нашли патроны. Оружие стало немного сильнее (мысленно).")
+        elif event == 5:
+            print("Пусто. Тишина.")
+        else:
+            print("Вы услышали шаги вдали, но никого не увидели.")
+
+        if bomb_planted and not bomb_defused:
+            bomb_timer -= 1
+            if bomb_timer <= 0:
+                return cs2_end_match("БОМБА ВЗОРВАЛАСЬ! Т побеждают.")
+
+        pos += 1
+        time.sleep(1)
+
+    if hp <= 0:
+        return cs2_end_match("Вы погибли.")
+
+    result = f"Убийств: {kills}  |  Осталось HP: {hp}  |  Денег: ${money}\n"
+    if bomb_planted and not bomb_defused:
+        result += "Бомба была заложена, но не взорвалась и не была разминирована. Концовка: Ничья."
+    elif team == "Т" and bomb_defused:
+        result += "Бомбу разминировали. Концовка: Поражение Т."
+    elif team == "КТ" and bomb_planted and not bomb_defused:
+        result += "Бомба не была разминирована. Концовка: Победа Т."
+    elif kills >= 3:
+        result += "Концовка: Вы зачистили карту и стали MVP."
+    elif kills >= 1:
+        result += "Концовка: Вы выжили на карте."
+    else:
+        result += "Концовка: Вы прошли карту, не встретив врагов. Скучно."
+    return cs2_end_match(result)
+
+
 def location_cs2():
     global life, location
     print()
@@ -1354,12 +1617,11 @@ def location_cs2():
     print("CS2")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Играть оффлайн")
-    print("2. Играть онлайн")
-    print("3. Выйти")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Играть оффлайн",
+        "Играть онлайн",
+        "Выйти"
+    ])
     if choose == 1:
         return "offline"
     elif choose == 2:
@@ -1378,12 +1640,11 @@ def location_offline():
     print("CS2 - ОФФЛАЙН")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Играть за Т")
-    print("2. Играть за КТ")
-    print("3. Выйти")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 4))
+    choose = menu([
+        "Играть за Т",
+        "Играть за КТ",
+        "Выйти"
+    ])
     if choose == 1:
         return "off_t"
     elif choose == 2:
@@ -1399,36 +1660,36 @@ def location_off_t():
     global life, location
     print()
     print("=" * 60)
-    print("CS2 - ЗА Т")
+    print("CS2 - ОФФЛАЙН ЗА Т")
     print("=" * 60)
     time.sleep(1)
     print("Вы играете за Т...")
     time.sleep(1)
-    line()
-    print("1. Выиграть")
-    line()
-    safe_input("Ваш выбор: ", range(1, 2))
-    print("Вы выиграли! Молодцы.")
-    time.sleep(1)
-    return "cs2"
+    map_choice = menu([
+        "Mirage",
+        "Dust2",
+        "Inferno"
+    ])
+    maps = {1: "Mirage", 2: "Dust2", 3: "Inferno"}
+    return cs2_explore_map(maps[map_choice], "Т")
 
 
 def location_off_kt():
     global life, location
     print()
     print("=" * 60)
-    print("CS2 - ЗА КТ")
+    print("CS2 - ОФФЛАЙН ЗА КТ")
     print("=" * 60)
     time.sleep(1)
     print("Вы играете за КТ...")
     time.sleep(1)
-    line()
-    print("1. Выиграть")
-    line()
-    safe_input("Ваш выбор: ", range(1, 2))
-    print("Вы выиграли! Молодцы.")
-    time.sleep(1)
-    return "cs2"
+    map_choice = menu([
+        "Mirage",
+        "Dust2",
+        "Inferno"
+    ])
+    maps = {1: "Mirage", 2: "Dust2", 3: "Inferno"}
+    return cs2_explore_map(maps[map_choice], "КТ")
 
 
 def location_online():
@@ -1438,9 +1699,20 @@ def location_online():
     print("CS2 - ОНЛАЙН")
     print("=" * 60)
     time.sleep(1)
-    print("Мне было лень придумывать геймплей КС2, поэтому вы вернётесь в локацию КС...")
+    print("Поиск матча...")
     time.sleep(2)
-    return "cs2"
+    print("Матч найден!")
+    time.sleep(1)
+    map_choice = menu([
+        "Mirage",
+        "Dust2",
+        "Inferno"
+    ])
+    maps = {1: "Mirage", 2: "Dust2", 3: "Inferno"}
+    team = random.choice(["Т", "КТ"])
+    print(f"Вы играете за {team}.")
+    time.sleep(1)
+    return cs2_explore_map(maps[map_choice], team)
 
 
 def location_higth_n():
@@ -1450,13 +1722,12 @@ def location_higth_n():
     print("ВЫСШИЙ НОВГОРОД")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Призвать Котость")
-    print("2. Остаться жить (концовка)")
-    print("3. Прыгнуть обратно в город")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+    choose = menu([
+        "Призвать Котость",
+        "Остаться жить (концовка)",
+        "Прыгнуть обратно в город",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         print("Вы призвали Котость!")
         time.sleep(2)
@@ -1494,13 +1765,12 @@ def location_back_chekyshie():
     print("ЗАЧЕКУШЬЕ")
     print("=" * 60)
     time.sleep(1)
-    line()
-    print("1. Пить чекушки (концовка - ты спился)")
-    print("2. Смириться (концовка - смерть)")
-    print("3. Искать хаммамную комнату (хорошая концовка, если нашёл)")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+    choose = menu([
+        "Пить чекушки (концовка - ты спился)",
+        "Смириться (концовка - смерть)",
+        "Искать хаммамную комнату (хорошая концовка, если нашёл)",
+        "Посмотреть инвентарь"
+    ])
     if choose == 1:
         print("Вы начали пить чекушки...")
         time.sleep(2)
@@ -1547,6 +1817,8 @@ def location_back_chekyshie():
         show_inventory(inventory)
         return "back_chekyshie"
     return "back_chekyshie"
+
+
 def location_Alab_P():
     global life, location, inventory, found_AP, have_AP_ticket
     print()
@@ -1555,13 +1827,12 @@ def location_Alab_P():
     print("=" * 60)
     time.sleep(1)
     print("Вы в Алабуга Политехе. Воздух здесь... странный. Знания витают в воздухе.")
-    line()
-    print("1. Учиться")
-    print("2. Уволиться")
-    print("3. Спрыгнуть из окна из Политеха")
-    print("4. Посмотреть инвентарь")
-    line()
-    choose = safe_input("Ваш выбор: ", range(1, 5))
+    choose = menu([
+        "Учиться",
+        "Уволиться",
+        "Спрыгнуть из окна из Политеха",
+        "Посмотреть инвентарь"
+    ])
 
     if choose == 1:
         print("Вы начали учиться...")
@@ -1581,7 +1852,6 @@ def location_Alab_P():
     elif choose == 2:
         print("Вы уволились из Алабуга Политеха...")
         time.sleep(1)
-        # билет пропадает
         for item in inventory:
             if item[0] == "Билет в Алабуга Политех":
                 inventory.remove(item)
@@ -1608,15 +1878,14 @@ def location_Alab_P():
 
     return "Alab_P"
 
-# ============================================================
-# ГЛАВНЫЙ ЦИКЛ
-# ============================================================
+
+
 found_AP = False
 have_AP_ticket = False
 deth_babke = False
 have_phone = False
 found_light = False
-location = "town"
+location = "basement"
 tapochki = False
 cherdak_key = False
 found_patapim_key = False
@@ -1694,5 +1963,7 @@ while life:
         location = location_higth_n()
     elif location == "back_chekyshie":
         location = location_back_chekyshie()
+    elif location == "Alab_P":
+        location = location_Alab_P()
     elif location == "end":
         break
